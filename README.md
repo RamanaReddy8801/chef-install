@@ -64,7 +64,7 @@ end
 |:------------------------------------------------------|:--------------|:----------------------------------------------------------------------------------------------------------------------------------------------------|
 | `default['newrelic_install']['NEW_RELIC_API_KEY']`    | `nil`         | new relic api key                                                                                                                                   |
 | `default['newrelic_install']['NEW_RELIC_ACCOUNT_ID']` | `nil`         | new relic account id                                                                                                                                |
-| `default['newrelic_install']['targets']`              | []            | agents to be installed, possible values are (`infrastructure-agent-installer`, `logs-integration`, `php-agent-installer`, `dotnet-agent-installer`) |
+| `default['newrelic_install']['targets']`              | []            | agents to be installed, possible values are (`infrastructure-agent-installer`, `logs-integration`, `php-agent-installer`, `dotnet-agent-installer`, `agent-control`, `logs-integration-agent-control`, `nrdot-collector-mysql`, `nrdot-collector-mysql-rds`, `nrdot-collector-postgresql`, `nrdot-collector-postgresql-rds`) |
 
 #### Optional
 
@@ -87,6 +87,10 @@ end
 | Name                                                               | Default value | Description                               |
 |:-------------------------------------------------------------------|:--------------|:------------------------------------------|
 | `default['newrelic_install']['env']['NEW_RELIC_APPLICATION_NAME']` | `nil`         | optional name for your dotnet application |
+
+#### NRDOT MySQL / PostgreSQL Collectors
+
+The `nrdot-collector-mysql*` and `nrdot-collector-postgresql*` targets each require their own set of `NR_CLI_*` env vars (server, port, credentials) that vary by variant (local vs RDS). No defaults are declared for these — set the vars relevant to your chosen target via `default['newrelic_install']['env'][...]`. See the comments in `attributes/default.rb` and the corresponding recipe definitions in [open-install-library](https://github.com/newrelic/open-install-library) for the exact list per target.
 
 ### Testing
 

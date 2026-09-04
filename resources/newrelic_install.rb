@@ -72,6 +72,10 @@ action_class do
       dotnet-agent-installer
       agent-control
       logs-integration-agent-control
+      nrdot-collector-mysql
+      nrdot-collector-mysql-rds
+      nrdot-collector-postgresql
+      nrdot-collector-postgresql-rds
     ).to_set
     allowed_targets_string = allowed_targets.join(', ')
     incoming_targets = new_resource.targets.to_set

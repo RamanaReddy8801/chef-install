@@ -290,4 +290,48 @@ describe 'newrelic-install::default' do
       expect(subject).not_to run_powershell_script('newrelic install').with(code: include('logs-integration-agent-control'))
     end
   end
+
+  context 'when targets only contains nrdot-collector-mysql' do
+    default_attributes['newrelic_install']['NEW_RELIC_API_KEY'] = 'xxx'
+    default_attributes['newrelic_install']['NEW_RELIC_ACCOUNT_ID'] = 'xxx'
+    default_attributes['newrelic_install']['NEW_RELIC_REGION'] = 'xxx'
+    default_attributes['newrelic_install']['targets'] = ['nrdot-collector-mysql']
+
+    it 'run bash newrelic install command with nrdot-collector-mysql' do
+      expect(subject).to run_execute('newrelic install').with(command: include('nrdot-collector-mysql'))
+    end
+  end
+
+  context 'when targets only contains nrdot-collector-mysql-rds' do
+    default_attributes['newrelic_install']['NEW_RELIC_API_KEY'] = 'xxx'
+    default_attributes['newrelic_install']['NEW_RELIC_ACCOUNT_ID'] = 'xxx'
+    default_attributes['newrelic_install']['NEW_RELIC_REGION'] = 'xxx'
+    default_attributes['newrelic_install']['targets'] = ['nrdot-collector-mysql-rds']
+
+    it 'run bash newrelic install command with nrdot-collector-mysql-rds' do
+      expect(subject).to run_execute('newrelic install').with(command: include('nrdot-collector-mysql-rds'))
+    end
+  end
+
+  context 'when targets only contains nrdot-collector-postgresql' do
+    default_attributes['newrelic_install']['NEW_RELIC_API_KEY'] = 'xxx'
+    default_attributes['newrelic_install']['NEW_RELIC_ACCOUNT_ID'] = 'xxx'
+    default_attributes['newrelic_install']['NEW_RELIC_REGION'] = 'xxx'
+    default_attributes['newrelic_install']['targets'] = ['nrdot-collector-postgresql']
+
+    it 'run bash newrelic install command with nrdot-collector-postgresql' do
+      expect(subject).to run_execute('newrelic install').with(command: include('nrdot-collector-postgresql'))
+    end
+  end
+
+  context 'when targets only contains nrdot-collector-postgresql-rds' do
+    default_attributes['newrelic_install']['NEW_RELIC_API_KEY'] = 'xxx'
+    default_attributes['newrelic_install']['NEW_RELIC_ACCOUNT_ID'] = 'xxx'
+    default_attributes['newrelic_install']['NEW_RELIC_REGION'] = 'xxx'
+    default_attributes['newrelic_install']['targets'] = ['nrdot-collector-postgresql-rds']
+
+    it 'run bash newrelic install command with nrdot-collector-postgresql-rds' do
+      expect(subject).to run_execute('newrelic install').with(command: include('nrdot-collector-postgresql-rds'))
+    end
+  end
 end

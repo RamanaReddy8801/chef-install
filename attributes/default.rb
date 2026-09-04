@@ -26,6 +26,10 @@ default['newrelic_install']['verbosity'] = ''
 # dotnet-agent-installer
 # agent-control
 # logs-integration-agent-control
+# nrdot-collector-mysql
+# nrdot-collector-mysql-rds
+# nrdot-collector-postgresql
+# nrdot-collector-postgresql-rds
 default['newrelic_install']['targets'] = []
 
 ########
@@ -46,3 +50,34 @@ default['newrelic_install']['timeout_seconds'] = '600'
 
 # optional name for your application
 default['newrelic_install']['env']['NEW_RELIC_APPLICATION_NAME'] = ''
+
+############################
+# NRDOT MYSQL, POSTGRESQL #
+############################
+
+# These targets require env vars that vary by variant (local vs RDS) and
+# often include credentials, so no defaults are declared here. Set only the
+# vars needed for your chosen target via env attribute overrides.
+#
+# nrdot-collector-mysql:
+#   NR_CLI_MYSQL_CONFIG_PRESET, NR_CLI_MYSQL_SERVER, NR_CLI_MYSQL_PORT,
+#   NR_CLI_MYSQL_ROOT_PASSWORD, NR_CLI_MYSQL_LOGIN_NAME
+#   (optional: NR_CLI_MYSQL_DATABASE)
+#
+# nrdot-collector-mysql-rds:
+#   NR_CLI_MYSQL_CONFIG_PRESET, NR_CLI_MYSQL_SERVER, NR_CLI_MYSQL_PORT,
+#   NR_CLI_MYSQL_MASTER_USER, NR_CLI_MYSQL_MASTER_PASSWORD, NR_CLI_MYSQL_LOGIN_NAME
+#   (optional: NR_CLI_MYSQL_DATABASE, NR_CLI_MYSQL_TLS_CA_FILE)
+#
+# nrdot-collector-postgresql:
+#   NR_CLI_POSTGRES_CONFIG_PRESET, NR_CLI_POSTGRES_SERVER, NR_CLI_POSTGRES_PORT,
+#   NR_CLI_POSTGRES_SUPERUSER_PASSWORD, NR_CLI_POSTGRES_LOGIN_NAME,
+#   NR_CLI_POSTGRES_DATABASES (required, comma-separated)
+#
+# nrdot-collector-postgresql-rds:
+#   NR_CLI_POSTGRES_CONFIG_PRESET, NR_CLI_POSTGRES_SERVER, NR_CLI_POSTGRES_PORT,
+#   NR_CLI_POSTGRES_MASTER_USER, NR_CLI_POSTGRES_MASTER_PASSWORD,
+#   NR_CLI_POSTGRES_LOGIN_NAME, NR_CLI_POSTGRES_DATABASES (required, comma-separated)
+#
+# See https://github.com/newrelic/open-install-library/pull/1422, #1423
+# for the authoritative recipe definitions (open at time of writing).
