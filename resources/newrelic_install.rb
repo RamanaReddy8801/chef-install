@@ -72,6 +72,12 @@ action_class do
       dotnet-agent-installer
       agent-control
       logs-integration-agent-control
+      nrdot-collector-mssql
+      nrdot-collector-mssql-winauth
+      nrdot-collector-mssql-rds
+      nrdot-collector-mssql-rds-winauth
+      nrdot-collector-oracle
+      nrdot-collector-oracle-rds
     ).to_set
     allowed_targets_string = allowed_targets.join(', ')
     incoming_targets = new_resource.targets.to_set
