@@ -64,7 +64,7 @@ end
 |:------------------------------------------------------|:--------------|:----------------------------------------------------------------------------------------------------------------------------------------------------|
 | `default['newrelic_install']['NEW_RELIC_API_KEY']`    | `nil`         | new relic api key                                                                                                                                   |
 | `default['newrelic_install']['NEW_RELIC_ACCOUNT_ID']` | `nil`         | new relic account id                                                                                                                                |
-| `default['newrelic_install']['targets']`              | []            | agents to be installed, possible values are (`infrastructure-agent-installer`, `logs-integration`, `php-agent-installer`, `dotnet-agent-installer`, `nrdot-collector-mysql`, `nrdot-collector-mysql-rds`, `nrdot-collector-postgresql`, `nrdot-collector-postgresql-rds`) |
+| `default['newrelic_install']['targets']`              | []            | agents to be installed, possible values are (`infrastructure-agent-installer`, `logs-integration`, `php-agent-installer`, `dotnet-agent-installer`, `agent-control`, `logs-integration-agent-control`, `nrdot-collector-mssql`, `nrdot-collector-mssql-winauth`, `nrdot-collector-mssql-rds`, `nrdot-collector-mssql-rds-winauth`, `nrdot-collector-oracle`, `nrdot-collector-oracle-rds`) |
 
 #### Optional
 
@@ -91,6 +91,9 @@ end
 #### NRDOT MySQL / PostgreSQL Collectors
 
 The `nrdot-collector-mysql*` and `nrdot-collector-postgresql*` targets each require their own set of `NR_CLI_*` env vars (server, port, credentials) that vary by variant (local vs RDS). No defaults are declared for these — set the vars relevant to your chosen target via `default['newrelic_install']['env'][...]`. See the comments in `attributes/default.rb` and the corresponding recipe definitions in [open-install-library](https://github.com/newrelic/open-install-library) for the exact list per target.
+#### NRDOT MSSQL / Oracle Collectors
+
+The `nrdot-collector-mssql*` and `nrdot-collector-oracle*` targets each require their own set of `NR_CLI_*` env vars (server/host, port, credentials, auth mode) that vary by variant (local vs RDS, SQL auth vs Windows/gMSA auth). No defaults are declared for these — set the vars relevant to your chosen target via `default['newrelic_install']['env'][...]`. See the comments in `attributes/default.rb` and the corresponding recipe definitions in [open-install-library](https://github.com/newrelic/open-install-library) for the exact list per target.
 
 ### Testing
 

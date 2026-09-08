@@ -332,6 +332,69 @@ describe 'newrelic-install::default' do
 
     it 'run bash newrelic install command with nrdot-collector-postgresql-rds' do
       expect(subject).to run_execute('newrelic install').with(command: include('nrdot-collector-postgresql-rds'))
+  context 'when targets only contains nrdot-collector-mssql' do
+    default_attributes['newrelic_install']['NEW_RELIC_API_KEY'] = 'xxx'
+    default_attributes['newrelic_install']['NEW_RELIC_ACCOUNT_ID'] = 'xxx'
+    default_attributes['newrelic_install']['NEW_RELIC_REGION'] = 'xxx'
+    default_attributes['newrelic_install']['targets'] = ['nrdot-collector-mssql']
+
+    it 'run bash newrelic install command with nrdot-collector-mssql' do
+      expect(subject).to run_execute('newrelic install').with(command: include('nrdot-collector-mssql'))
+    end
+  end
+
+  context 'when targets only contains nrdot-collector-mssql-winauth' do
+    default_attributes['newrelic_install']['NEW_RELIC_API_KEY'] = 'xxx'
+    default_attributes['newrelic_install']['NEW_RELIC_ACCOUNT_ID'] = 'xxx'
+    default_attributes['newrelic_install']['NEW_RELIC_REGION'] = 'xxx'
+    default_attributes['newrelic_install']['targets'] = ['nrdot-collector-mssql-winauth']
+
+    it 'run bash newrelic install command with nrdot-collector-mssql-winauth' do
+      expect(subject).to run_execute('newrelic install').with(command: include('nrdot-collector-mssql-winauth'))
+    end
+  end
+
+  context 'when targets only contains nrdot-collector-mssql-rds' do
+    default_attributes['newrelic_install']['NEW_RELIC_API_KEY'] = 'xxx'
+    default_attributes['newrelic_install']['NEW_RELIC_ACCOUNT_ID'] = 'xxx'
+    default_attributes['newrelic_install']['NEW_RELIC_REGION'] = 'xxx'
+    default_attributes['newrelic_install']['targets'] = ['nrdot-collector-mssql-rds']
+
+    it 'run bash newrelic install command with nrdot-collector-mssql-rds' do
+      expect(subject).to run_execute('newrelic install').with(command: include('nrdot-collector-mssql-rds'))
+    end
+  end
+
+  context 'when targets only contains nrdot-collector-mssql-rds-winauth' do
+    default_attributes['newrelic_install']['NEW_RELIC_API_KEY'] = 'xxx'
+    default_attributes['newrelic_install']['NEW_RELIC_ACCOUNT_ID'] = 'xxx'
+    default_attributes['newrelic_install']['NEW_RELIC_REGION'] = 'xxx'
+    default_attributes['newrelic_install']['targets'] = ['nrdot-collector-mssql-rds-winauth']
+
+    it 'run bash newrelic install command with nrdot-collector-mssql-rds-winauth' do
+      expect(subject).to run_execute('newrelic install').with(command: include('nrdot-collector-mssql-rds-winauth'))
+    end
+  end
+
+  context 'when targets only contains nrdot-collector-oracle' do
+    default_attributes['newrelic_install']['NEW_RELIC_API_KEY'] = 'xxx'
+    default_attributes['newrelic_install']['NEW_RELIC_ACCOUNT_ID'] = 'xxx'
+    default_attributes['newrelic_install']['NEW_RELIC_REGION'] = 'xxx'
+    default_attributes['newrelic_install']['targets'] = ['nrdot-collector-oracle']
+
+    it 'run bash newrelic install command with nrdot-collector-oracle' do
+      expect(subject).to run_execute('newrelic install').with(command: include('nrdot-collector-oracle'))
+    end
+  end
+
+  context 'when targets only contains nrdot-collector-oracle-rds' do
+    default_attributes['newrelic_install']['NEW_RELIC_API_KEY'] = 'xxx'
+    default_attributes['newrelic_install']['NEW_RELIC_ACCOUNT_ID'] = 'xxx'
+    default_attributes['newrelic_install']['NEW_RELIC_REGION'] = 'xxx'
+    default_attributes['newrelic_install']['targets'] = ['nrdot-collector-oracle-rds']
+
+    it 'run bash newrelic install command with nrdot-collector-oracle-rds' do
+      expect(subject).to run_execute('newrelic install').with(command: include('nrdot-collector-oracle-rds'))
     end
   end
 end
