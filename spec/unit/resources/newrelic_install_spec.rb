@@ -332,6 +332,9 @@ describe 'newrelic-install::default' do
 
     it 'run bash newrelic install command with nrdot-collector-postgresql-rds' do
       expect(subject).to run_execute('newrelic install').with(command: include('nrdot-collector-postgresql-rds'))
+    end
+  end
+
   context 'when targets only contains nrdot-collector-mssql' do
     default_attributes['newrelic_install']['NEW_RELIC_API_KEY'] = 'xxx'
     default_attributes['newrelic_install']['NEW_RELIC_ACCOUNT_ID'] = 'xxx'
