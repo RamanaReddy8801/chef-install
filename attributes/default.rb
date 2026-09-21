@@ -61,57 +61,71 @@ default['newrelic_install']['env']['NEW_RELIC_APPLICATION_NAME'] = ''
 # NRDOT MYSQL, POSTGRESQL #
 ############################
 
-# These targets require env vars that vary by variant (local vs RDS) and
-# often include credentials, so no defaults are declared here. Set only the
-# vars needed for your chosen target via env attribute overrides.
+# These targets now configure one collector against one or more instances via
+# an instances file (YAML: host/port/login_name per instance) plus a secrets
+# file (KEY=VALUE per line, admin credentials indexed by instance number).
+# Env vars vary by variant (local vs RDS) and include file paths rather than
+# inline credentials, so no defaults are declared here. Set only the vars
+# needed for your chosen target via env attribute overrides.
 #
 # nrdot-collector-mysql:
-#   NR_CLI_MYSQL_CONFIG_PRESET, NR_CLI_MYSQL_SERVER, NR_CLI_MYSQL_PORT,
-#   NR_CLI_MYSQL_ROOT_PASSWORD, NR_CLI_MYSQL_LOGIN_NAME
-#   (optional: NR_CLI_MYSQL_DATABASE)
+#   NR_CLI_MYSQL_CONFIG_PRESET, NR_CLI_MYSQL_INSTANCES_FILE, NR_CLI_MYSQL_SECRETS_FILE
+#   secrets file per instance <i>: NR_CLI_MYSQL_ADMIN_USER_<i>, NR_CLI_MYSQL_ADMIN_PASSWORD_<i> (root creds)
 #
 # nrdot-collector-mysql-rds:
-#   NR_CLI_MYSQL_CONFIG_PRESET, NR_CLI_MYSQL_SERVER, NR_CLI_MYSQL_PORT,
-#   NR_CLI_MYSQL_MASTER_USER, NR_CLI_MYSQL_MASTER_PASSWORD, NR_CLI_MYSQL_LOGIN_NAME
-#   (optional: NR_CLI_MYSQL_DATABASE, NR_CLI_MYSQL_TLS_CA_FILE)
+#   NR_CLI_MYSQL_CONFIG_PRESET, NR_CLI_MYSQL_INSTANCES_FILE, NR_CLI_MYSQL_SECRETS_FILE
+#   (optional: NR_CLI_MYSQL_TLS_CA_FILE)
+#   secrets file per instance <i>: NR_CLI_MYSQL_ADMIN_USER_<i>, NR_CLI_MYSQL_ADMIN_PASSWORD_<i> (RDS master creds)
 #
 # nrdot-collector-postgresql:
-#   NR_CLI_POSTGRES_CONFIG_PRESET, NR_CLI_POSTGRES_SERVER, NR_CLI_POSTGRES_PORT,
-#   NR_CLI_POSTGRES_SUPERUSER_PASSWORD, NR_CLI_POSTGRES_LOGIN_NAME,
-#   NR_CLI_POSTGRES_DATABASES (required, comma-separated)
+#   NR_CLI_POSTGRES_CONFIG_PRESET, NR_CLI_POSTGRES_INSTANCES_FILE, NR_CLI_POSTGRES_SECRETS_FILE
+#   (optional: NR_CLI_POSTGRES_ENABLE_EXPLAIN_HELPER)
+#   instances file: databases (required per instance, e.g. [app1, app2])
+#   secrets file per instance <i>: NR_CLI_POSTGRES_SUPERUSER_USER_<i>, NR_CLI_POSTGRES_SUPERUSER_PASSWORD_<i>
 #
 # nrdot-collector-postgresql-rds:
-#   NR_CLI_POSTGRES_CONFIG_PRESET, NR_CLI_POSTGRES_SERVER, NR_CLI_POSTGRES_PORT,
-#   NR_CLI_POSTGRES_MASTER_USER, NR_CLI_POSTGRES_MASTER_PASSWORD,
-#   NR_CLI_POSTGRES_LOGIN_NAME, NR_CLI_POSTGRES_DATABASES (required, comma-separated)
+#   NR_CLI_POSTGRES_CONFIG_PRESET, NR_CLI_POSTGRES_INSTANCES_FILE, NR_CLI_POSTGRES_SECRETS_FILE
+#   (optional: NR_CLI_POSTGRES_ENABLE_EXPLAIN_HELPER)
+#   instances file: databases (required per instance, e.g. [app1, app2])
+#   secrets file per instance <i>: NR_CLI_POSTGRES_ADMIN_USER_<i>, NR_CLI_POSTGRES_ADMIN_PASSWORD_<i> (RDS master creds)
 #
-# See https://github.com/newrelic/open-install-library/pull/1422, #1423
+# A bad instance (wrong password, unsupported version, failed user setup) is
+# skipped with a logged reason rather than aborting the whole install.
+# See https://github.com/newrelic/open-install-library/pull/1434
 #######################
 # NRDOT MSSQL, ORACLE #
 #######################
 
-# These targets require env vars that vary by variant (local vs RDS, auth
-# mode) and often include credentials, so no defaults are declared here.
-# Set only the vars needed for your chosen target via env attribute overrides.
+# nrdot-collector-mssql and nrdot-collector-mssql-rds now configure one
+# collector against one or more instances via an instances file plus a
+# secrets file, same shape as MySQL/PostgreSQL above. The winauth variants
+# below are unchanged (still single-instance) and env vars still vary by
+# variant, so no defaults are declared here. Set only the vars needed for
+# your chosen target via env attribute overrides.
 #
-# nrdot-collector-mssql / nrdot-collector-mssql-rds:
-#   NR_CLI_MSSQL_CONFIG_PRESET, NR_CLI_MSSQL_SERVER, NR_CLI_MSSQL_PORT,
-#   NR_CLI_MSSQL_LOGIN_NAME, NR_CLI_MSSQL_SA_PASSWORD (local) or
-#   NR_CLI_MSSQL_MASTER_USER / NR_CLI_MSSQL_MASTER_PASSWORD (RDS)
+# nrdot-collector-mssql:
+#   NR_CLI_MSSQL_CONFIG_PRESET, NR_CLI_MSSQL_INSTANCES_FILE, NR_CLI_MSSQL_SECRETS_FILE
+#   secrets file per instance <i>: NR_CLI_MSSQL_ADMIN_USER_<i>, NR_CLI_MSSQL_ADMIN_PASSWORD_<i> (sa creds)
+#
+# nrdot-collector-mssql-rds:
+#   NR_CLI_MSSQL_CONFIG_PRESET, NR_CLI_MSSQL_INSTANCES_FILE, NR_CLI_MSSQL_SECRETS_FILE
+#   secrets file per instance <i>: NR_CLI_MSSQL_ADMIN_USER_<i>, NR_CLI_MSSQL_ADMIN_PASSWORD_<i> (RDS master creds)
 #
 # nrdot-collector-mssql-winauth / nrdot-collector-mssql-rds-winauth:
 #   NR_CLI_MSSQL_AUTH_MODE, NR_CLI_MSSQL_WIN_ACCOUNT, NR_CLI_MSSQL_WIN_PASSWORD,
 #   NR_CLI_MSSQL_GMSA_ACCOUNT (plus server/port/preset above)
 #
 # nrdot-collector-oracle:
-#   NR_CLI_ORACLE_CONFIG_PRESET, NR_CLI_ORACLE_HOST, NR_CLI_ORACLE_PORT,
-#   NR_CLI_ORACLE_CONTAINER_TYPE, NR_CLI_ORACLE_PDB_NAME, NR_CLI_ORACLE_SSH_USER,
-#   NR_CLI_ORACLE_LOGIN_NAME, NR_CLI_ORACLE_LOGIN_PASSWORD, NR_CLI_ORACLE_SERVICE_NAME
+#   NR_CLI_ORACLE_CONFIG_PRESET, NR_CLI_ORACLE_INSTANCES_FILE
+#   (optional: NR_CLI_ORACLE_SECRETS_FILE - not required, no SYS access needed)
+#   secrets file per instance <i> (optional): NR_CLI_ORACLE_LOGIN_PASSWORD_<i> (fixed password override)
 #
 # nrdot-collector-oracle-rds:
-#   NR_CLI_ORACLE_CONFIG_PRESET, NR_CLI_ORACLE_HOST, NR_CLI_ORACLE_PORT,
-#   NR_CLI_ORACLE_ADMIN_USER, NR_CLI_ORACLE_ADMIN_PASSWORD, NR_CLI_ORACLE_LOGIN_NAME,
-#   NR_CLI_ORACLE_LOGIN_PASSWORD, NR_CLI_ORACLE_SERVICE_NAME
+#   NR_CLI_ORACLE_CONFIG_PRESET, NR_CLI_ORACLE_INSTANCES_FILE, NR_CLI_ORACLE_SECRETS_FILE
+#   secrets file per instance <i>: NR_CLI_ORACLE_ADMIN_USER_<i>, NR_CLI_ORACLE_ADMIN_PASSWORD_<i> (RDS master creds)
+#   (optional per instance: NR_CLI_ORACLE_LOGIN_PASSWORD_<i>)
 #
-# See https://github.com/newrelic/open-install-library/pull/1403, #1412, #1416
+# A bad instance (wrong password, unsupported version, failed user setup) is
+# skipped with a logged reason rather than aborting the whole install.
+# See https://github.com/newrelic/open-install-library/pull/1434
 # for the authoritative recipe definitions (open at time of writing).

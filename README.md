@@ -90,10 +90,11 @@ end
 
 #### NRDOT MySQL / PostgreSQL Collectors
 
-The `nrdot-collector-mysql*` and `nrdot-collector-postgresql*` targets each require their own set of `NR_CLI_*` env vars (server, port, credentials) that vary by variant (local vs RDS). No defaults are declared for these — set the vars relevant to your chosen target via `default['newrelic_install']['env'][...]`. See the comments in `attributes/default.rb` and the corresponding recipe definitions in [open-install-library](https://github.com/newrelic/open-install-library) for the exact list per target.
+The `nrdot-collector-mysql*` and `nrdot-collector-postgresql*` targets configure one collector against one or more instances via an instances file (YAML) plus a secrets file (`KEY=VALUE` per instance), rather than inline server/credential env vars. The exact `NR_CLI_*` env vars vary by variant (local vs RDS). No defaults are declared for these — set the vars relevant to your chosen target via `default['newrelic_install']['env'][...]`. See the comments in `attributes/default.rb` and the corresponding recipe definitions in [open-install-library](https://github.com/newrelic/open-install-library) for the exact list per target.
+
 #### NRDOT MSSQL / Oracle Collectors
 
-The `nrdot-collector-mssql*` and `nrdot-collector-oracle*` targets each require their own set of `NR_CLI_*` env vars (server/host, port, credentials, auth mode) that vary by variant (local vs RDS, SQL auth vs Windows/gMSA auth). No defaults are declared for these — set the vars relevant to your chosen target via `default['newrelic_install']['env'][...]`. See the comments in `attributes/default.rb` and the corresponding recipe definitions in [open-install-library](https://github.com/newrelic/open-install-library) for the exact list per target.
+The `nrdot-collector-mssql*` and `nrdot-collector-oracle*` targets configure one collector against one or more instances via an instances file (YAML) plus a secrets file (`KEY=VALUE` per instance), rather than inline server/credential env vars; the winauth variants still use single-instance auth-mode env vars. The exact `NR_CLI_*` env vars vary by variant (local vs RDS, SQL auth vs Windows/gMSA auth). No defaults are declared for these — set the vars relevant to your chosen target via `default['newrelic_install']['env'][...]`. See the comments in `attributes/default.rb` and the corresponding recipe definitions in [open-install-library](https://github.com/newrelic/open-install-library) for the exact list per target.
 
 ### Testing
 
