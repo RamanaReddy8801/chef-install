@@ -82,6 +82,7 @@ action_class do
       nrdot-collector-mssql-rds-winauth
       nrdot-collector-oracle
       nrdot-collector-oracle-rds
+      nrdot-collector-oracle-adb
     ).to_set
     allowed_targets_string = allowed_targets.join(', ')
     incoming_targets = new_resource.targets.to_set

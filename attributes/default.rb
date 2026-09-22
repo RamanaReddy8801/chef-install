@@ -36,6 +36,7 @@ default['newrelic_install']['verbosity'] = ''
 # nrdot-collector-mssql-rds-winauth
 # nrdot-collector-oracle
 # nrdot-collector-oracle-rds
+# nrdot-collector-oracle-adb
 default['newrelic_install']['targets'] = []
 
 ########
@@ -124,6 +125,15 @@ default['newrelic_install']['env']['NEW_RELIC_APPLICATION_NAME'] = ''
 #   NR_CLI_ORACLE_CONFIG_PRESET, NR_CLI_ORACLE_INSTANCES_FILE, NR_CLI_ORACLE_SECRETS_FILE
 #   secrets file per instance <i>: NR_CLI_ORACLE_ADMIN_USER_<i>, NR_CLI_ORACLE_ADMIN_PASSWORD_<i> (RDS master creds)
 #   (optional per instance: NR_CLI_ORACLE_LOGIN_PASSWORD_<i>)
+#
+# nrdot-collector-oracle-adb:
+#   NR_CLI_ORACLE_INSTANCES_FILE (no NR_CLI_ORACLE_CONFIG_PRESET - ADB has no host to monitor)
+#   instances file: each instance also needs wallet_dir (path to that instance's unzipped
+#   Oracle Wallet - download per instance from the ADB console, do not share between instances)
+#   NR_CLI_ORACLE_SECRETS_FILE (required)
+#   secrets file per instance <i>: NR_CLI_ORACLE_ADMIN_USER_<i>, NR_CLI_ORACLE_ADMIN_PASSWORD_<i> (ADB admin creds)
+#   (optional per instance: NR_CLI_ORACLE_LOGIN_PASSWORD_<i>)
+#   Requires sqlplus (Oracle Instant Client) installed and on PATH on the collector host.
 #
 # A bad instance (wrong password, unsupported version, failed user setup) is
 # skipped with a logged reason rather than aborting the whole install.
