@@ -64,7 +64,7 @@ end
 |:------------------------------------------------------|:--------------|:----------------------------------------------------------------------------------------------------------------------------------------------------|
 | `default['newrelic_install']['NEW_RELIC_API_KEY']`    | `nil`         | new relic api key                                                                                                                                   |
 | `default['newrelic_install']['NEW_RELIC_ACCOUNT_ID']` | `nil`         | new relic account id                                                                                                                                |
-| `default['newrelic_install']['targets']`              | []            | agents to be installed, possible values are (`infrastructure-agent-installer`, `logs-integration`, `php-agent-installer`, `dotnet-agent-installer`, `agent-control`, `logs-integration-agent-control`, `nrdot-collector-mssql`, `nrdot-collector-mssql-winauth`, `nrdot-collector-mssql-rds`, `nrdot-collector-mssql-rds-winauth`, `nrdot-collector-oracle`, `nrdot-collector-oracle-rds`) |
+| `default['newrelic_install']['targets']`              | []            | agents to be installed, possible values are (`infrastructure-agent-installer`, `logs-integration`, `php-agent-installer`, `dotnet-agent-installer`, `agent-control`, `logs-integration-agent-control`, `nrdot-collector-mssql`, `nrdot-collector-mssql-winauth`, `nrdot-collector-mssql-rds`, `nrdot-collector-mssql-rds-winauth`, `nrdot-collector-oracle`, `nrdot-collector-oracle-rds`, `nrdot-collector-oracle-adb`) |
 
 #### Optional
 

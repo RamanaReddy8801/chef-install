@@ -400,4 +400,15 @@ describe 'newrelic-install::default' do
       expect(subject).to run_execute('newrelic install').with(command: include('nrdot-collector-oracle-rds'))
     end
   end
+
+  context 'when targets only contains nrdot-collector-oracle-adb' do
+    default_attributes['newrelic_install']['NEW_RELIC_API_KEY'] = 'xxx'
+    default_attributes['newrelic_install']['NEW_RELIC_ACCOUNT_ID'] = 'xxx'
+    default_attributes['newrelic_install']['NEW_RELIC_REGION'] = 'xxx'
+    default_attributes['newrelic_install']['targets'] = ['nrdot-collector-oracle-adb']
+
+    it 'run bash newrelic install command with nrdot-collector-oracle-adb' do
+      expect(subject).to run_execute('newrelic install').with(command: include('nrdot-collector-oracle-adb'))
+    end
+  end
 end
